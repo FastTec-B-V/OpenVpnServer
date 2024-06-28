@@ -119,6 +119,7 @@ sshpass -p "$ssh_password" ssh -p $ssh_port "$username@$ip" << END
     sudo ufw disable
     sudo ufw allow "$port/$proto"
     sudo ufw allow OpenSSH
+	sudo ufw allow ssh
     echo -e "done\n"
 
     echo "====== Starting OpenVPN ======"
