@@ -29,12 +29,7 @@ validate_port() {
 }
 
 read -p "Enter your server's IP address: " ip
-ip_ok=$(validate_ip "$ip")
-while [[ $ip_ok -ne 0 ]]; do
-    echo "Invalid IP address."
-    read -p "Enter your server's IP address: " ip
-    ip_ok=$(validate_ip "$ip")
-done
+
 
 read -p "Enter SSH port [default is 22]: " ssh_port
 ssh_port=${ssh_port:-22}

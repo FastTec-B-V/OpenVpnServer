@@ -1,7 +1,7 @@
 client
 dev tun
 proto udp
-remote 91.236.230.55 1194
+remote 154.205.145.97 {port}
 resolv-retry infinite
 nobind
 user nobody
