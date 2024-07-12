@@ -159,5 +159,3 @@ sed -i'' -e "s/{ip}/$ip/" "/root/OpenVpnServer/ovpn_files/$filename.ovpn"
 sed -i'' -e "s/{proto}/$proto/" "/root/OpenVpnServer/ovpn_files/$filename.ovpn"
 sed -i'' -e "s/{port}/$port/" "/root/OpenVpnServer/ovpn_files/$filename.ovpn"
 echo "Config file created successfully. You can find it in the ovpn_files folder. Copy or add it to your host."
-echo "Rebooting server..."
-echo "y" | sudo ufw disable & sleep 3; sudo reboot
