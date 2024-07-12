@@ -106,20 +106,11 @@ if [[ "$access" =~ ^[nN]$ ]]; then
 fi
 
 echo -e "\n====== Uploading necessary files ======\n"
-template_file="/root/OpenVpnServer/openvpn_config_files/server-template.conf"
-server_file="/root/OpenVpnServer/openvpn_config_files/server.conf"
-
-if [[ -f "$template_file" ]]; then
-    cp "$template_file" "$server_file"
-    sed -i'' -e "s/{proto}/$proto/" "$server_file"
-    sed -i'' -e "s/{port}/$port/" "$server_file"
-    sed -i'' -e "s/{een}/$proto_index/" "$server_file"
-    sshpass -p "$ssh_password" scp -rp -P $ssh_port -o "StrictHostKeyChecking no" /root/OpenVpnServer/openvpn_config_files/ "$username@$ip:~/"
-    rm "$server_file"
-else
-    echo "Template file $template_file not found."
-    exit 1
-fi
+cp /root/OpenVpnServer/openvpn_config_files/server-template.conf /root/OpenVpnServer/openvpn_config_files/server.conf
+sed -i'' -e "s/{proto}/$proto/" /root/OpenVpnServer/openvpn_config_files/server.conf
+sed -i'' -e "s/{port}/$port/" /root/OpenVpnServer/openvpn_config_files/server.conf
+sed -i'' -e "s/{een}/$proto_index/" /root/OpenVpnServer/openvpn_config_files/server.conf
+sshpass -p "$ssh_password" scp -rp -P $ssh_port -o "StrictHostKeyChecking no" /root/OpenVpnServer/openvpn_config_files/ "$username@$ip:~/"
 
 echo -e "done\n"
 
@@ -157,6 +148,9 @@ sshpass -p "$ssh_password" ssh -p $ssh_port "$username@$ip" << END
     sudo systemctl enable openvpn@server
     sudo systemctl status openvpn@server
     echo -e "done\n"
+
+    
+    
 END
 
 echo "====== Creating ovpn file ======"
