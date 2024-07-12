@@ -154,9 +154,9 @@ sshpass -p "$ssh_password" ssh -p $ssh_port "$username@$ip" << END
 END
 
 echo "====== Creating ovpn file ======"
-cp OpenVpnServer/openvpn_config_files/template.ovpn "ovpn_files/$filename.ovpn"
-sed -i'' -e "s/{ip}/$ip/" "ovpn_files/$filename.ovpn"
-sed -i'' -e "s/{proto}/$proto/" "ovpn_files/$filename.ovpn"
-sed -i'' -e "s/{port}/$port/" "ovpn_files/$filename.ovpn"
+cp OpenVpnServer/openvpn_config_files/template.ovpn "OpenVpnServer/ovpn_files/$filename.ovpn"
+sed -i'' -e "s/{ip}/$ip/" "OpenVpnServer/ovpn_files/$filename.ovpn"
+sed -i'' -e "s/{proto}/$proto/" "OpenVpnServer/ovpn_files/$filename.ovpn"
+sed -i'' -e "s/{port}/$port/" "OpenVpnServer/ovpn_files/$filename.ovpn"
 echo "Config file created successfully. You can find it in the ovpn_files folder. Copy or add it to your host."
 read -n 1 -s -r -p "Press any key to exit"
