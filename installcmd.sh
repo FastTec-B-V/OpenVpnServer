@@ -106,12 +106,12 @@ if [[ "$access" =~ ^[nN]$ ]]; then
 fi
 
 echo -e "\n====== Uploading necessary files ======\n"
-cp openvpn_config_files/server-template.conf openvpn_config_files/server.conf
-sed -i'' -e "s/{proto}/$proto/" openvpn_config_files/server.conf
-sed -i'' -e "s/{port}/$port/" openvpn_config_files/server.conf
-sed -i'' -e "s/{een}/$proto_index/" openvpn_config_files/server.conf
-sshpass -p "$ssh_password" scp -rp -P $ssh_port -o "StrictHostKeyChecking no" openvpn_config_files/ "$username@$ip:~/"
-rm openvpn_config_files/server.conf
+cp OpenVpnServer/openvpn_config_files/server-template.conf OpenVpnServer/openvpn_config_files/server.conf
+sed -i'' -e "s/{proto}/$proto/" OpenVpnServer/openvpn_config_files/server.conf
+sed -i'' -e "s/{port}/$port/" OpenVpnServer/openvpn_config_files/server.conf
+sed -i'' -e "s/{een}/$proto_index/" OpenVpnServer/openvpn_config_files/server.conf
+sshpass -p "$ssh_password" scp -rp -P $ssh_port -o "StrictHostKeyChecking no" OpenVpnServer/openvpn_config_files/ "$username@$ip:~/"
+rm OpenVpnServer/openvpn_config_files/server.conf
 echo -e "done\n"
 
 interface=$(sshpass -p "$ssh_password" ssh -p $ssh_port "$username@$ip" ". /etc/profile && ip -4 route ls | grep default | grep -Po '(?<=dev )(\S+)'")
@@ -129,14 +129,14 @@ sshpass -p "$ssh_password" ssh -p $ssh_port "$username@$ip" << END
 
     echo "====== Configuring system ======"
     cd ~/
-    sed -i'' -e "s/{interface}/$interface/" openvpn_config_files/before.rules
-    yes | sudo cp -rf openvpn_config_files/before.rules /etc/ufw/before.rules
-    yes | sudo cp -rf openvpn_config_files/ufw /etc/default/ufw
-    yes | sudo cp -rf openvpn_config_files/sysctl.conf /etc/sysctl.conf
+    sed -i'' -e "s/{interface}/$interface/" OpenVpnServer/openvpn_config_files/before.rules
+    yes | sudo cp -rf OpenVpnServer/openvpn_config_files/before.rules /etc/ufw/before.rules
+    yes | sudo cp -rf OpenVpnServer/openvpn_config_files/ufw /etc/default/ufw
+    yes | sudo cp -rf OpenVpnServer/openvpn_config_files/sysctl.conf /etc/sysctl.conf
     echo -e "done\n"
 
     echo "====== Copying OpenVPN server files ======"
-    sudo cp -rf openvpn_config_files/{ca.crt,dh.pem,server.conf,server.crt,server.key,ta.key} /etc/openvpn/
+    sudo cp -rf OpenVpnServer/openvpn_config_files/{ca.crt,dh.pem,server.conf,server.crt,server.key,ta.key} /etc/openvpn/
     echo -e "done\n"
 
     echo "====== Configuring firewall ======"
@@ -154,7 +154,7 @@ sshpass -p "$ssh_password" ssh -p $ssh_port "$username@$ip" << END
 END
 
 echo "====== Creating ovpn file ======"
-cp openvpn_config_files/template.ovpn "ovpn_files/$filename.ovpn"
+cp OpenVpnServer/openvpn_config_files/template.ovpn "ovpn_files/$filename.ovpn"
 sed -i'' -e "s/{ip}/$ip/" "ovpn_files/$filename.ovpn"
 sed -i'' -e "s/{proto}/$proto/" "ovpn_files/$filename.ovpn"
 sed -i'' -e "s/{port}/$port/" "ovpn_files/$filename.ovpn"
