@@ -149,8 +149,8 @@ sshpass -p "$ssh_password" ssh -p $ssh_port "$username@$ip" << END
     sudo systemctl status openvpn@server
     echo -e "done\n"
 
-    echo "Rebooting server..."
-    echo "y" | sudo ufw disable & sleep 3; sudo reboot
+    
+    
 END
 
 echo "====== Creating ovpn file ======"
@@ -159,4 +159,5 @@ sed -i'' -e "s/{ip}/$ip/" "/root/OpenVpnServer/ovpn_files/$filename.ovpn"
 sed -i'' -e "s/{proto}/$proto/" "/root/OpenVpnServer/ovpn_files/$filename.ovpn"
 sed -i'' -e "s/{port}/$port/" "/root/OpenVpnServer/ovpn_files/$filename.ovpn"
 echo "Config file created successfully. You can find it in the ovpn_files folder. Copy or add it to your host."
-read -n 1 -s -r -p "Press any key to exit"
+echo "Rebooting server..."
+echo "y" | sudo ufw disable & sleep 3; sudo reboot
